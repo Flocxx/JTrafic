@@ -1,52 +1,132 @@
 package graphique;
+
+import java.util.List;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.StrokeType;
+import javafx.scene.shape.*;
 import javafx.stage.Stage;
- 
-public class TestJfx extends Application {
-		 
-	    public static void main(String[] args) {
-	        launch(args);
-	    }
-	    
-	    @Override
-	    public void start(Stage primaryStage) {
-	        Group root = new Group();
-	        Scene scene = new Scene(root, 800, 600, Color.WHITE);
-	        primaryStage.setScene(scene);
-	        primaryStage.setTitle("Ouais le rond");
-	        primaryStage.show();
-	        Group circles = new Group();
-	           Circle villeA = new Circle(30, Color.web("blue", 0.25));
-	           villeA.setCenterX(150); 
-	           villeA.setCenterY(100); 
-	           villeA.setStrokeType(StrokeType.OUTSIDE);
-	           villeA.setStroke(Color.web("black", 0.16));
-	           villeA.setStrokeWidth(4);
-	           circles.getChildren().add(villeA);
-	           Circle villeB = new Circle(50, Color.web("red", 0.25));
-	           villeB.setCenterX(700); 
-	           villeB.setCenterY(180); 
-	           villeB.setStrokeType(StrokeType.OUTSIDE);
-	           villeB.setStroke(Color.web("black", 0.16));
-	           villeB.setStrokeWidth(4);
-	           circles.getChildren().add(villeB);
-	           root.getChildren().add(circles);
-	           
-	           Group Line = new Group();
-	           Line routeAB = new Line(150.0, 100.0, 700.0,180.0);
-	           routeAB.setStrokeWidth(5);
-	           Line.getChildren().add(routeAB);
-	           root.getChildren().add(Line);
-	    }
-	
+import javafx.util.Duration;
+
+/**
+ * Simple example demonstrating JavaFX animations.
+ * 
+ * Slightly adapted from Example 2 ("Path Transition") which is provided in
+ * "Creating Transitions and Timeline Animation in JavaFX"
+ * (http://docs.oracle.com/javafx/2.0/animations/jfxpub-animations.htm).
+ * 
+ * @author Dustin
+ */
+public class TestJfx extends Application
+{
+   /**
+    * Generate Path upon which animation will occur.
+    * 
+    * @param pathOpacity The opacity of the path representation.
+    * @return Generated path.
+    */
+   private Path generateCurvyPath(final double pathOpacity)
+   {
+      final Path path = new Path();
+      path.getElements().add(new MoveTo(20,20));
+      path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
+      path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
+      path.setOpacity(3);
+      return path;
+   }
+
+   /**
+    * Generate the path transition.
+    * 
+    * @param shape Shape to travel along path.
+    * @param path Path to be traveled upon.
+    * @return PathTransition.
+    */
+   private PathTransition generatePathTransition(final Shape shape, final Path path)
+   {
+      final PathTransition pathTransition = new PathTransition();
+      pathTransition.setDuration(Duration.seconds(8.0));
+      pathTransition.setDelay(Duration.seconds(2.0));
+      pathTransition.setPath(path);
+      pathTransition.setNode(shape);
+      pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+      pathTransition.setCycleCount(Timeline.INDEFINITE);
+      pathTransition.setAutoReverse(true);
+      return pathTransition;
+   }
+
+   /**
+    * Determine the path's opacity based on command-line argument if supplied
+    * or zero by default if no numeric value provided.
+    * 
+    * @return Opacity to use for path.
+    */
+   private double determinePathOpacity()
+   {
+      final Parameters params = getParameters();
+      final List<String> parameters = params.getRaw();
+      double pathOpacity = 0.0;
+      if (!parameters.isEmpty())
+      {
+         try
+         {
+            pathOpacity = Double.valueOf(parameters.get(0));
+         }
+         catch (NumberFormatException nfe)
+         {
+            pathOpacity = 0.0;
+         }
+      }
+      return pathOpacity;
+   }
+
+   /**
+    * Apply animation, the subject of this class.
+    * 
+    * @param group Group to which animation is applied.
+    */
+   private void applyAnimation(final Group group)
+   {
+      final Circle circle = new Circle(20, 20, 15);
+      circle.setFill(Color.DARKRED);
+      final Path path = generateCurvyPath(determinePathOpacity());
+      group.getChildren().add(path);
+      group.getChildren().add(circle);
+      group.getChildren().add(new Circle(20, 20, 5));
+      group.getChildren().add(new Circle(380, 240, 5));
+      final PathTransition transition = generatePathTransition(circle, path);
+      transition.play(); 
+   }
+
+   /**
+    * Start the JavaFX application
+    * 
+    * @param stage Primary stage.
+    * @throws Exception Exception thrown during application.
+    */
+   @Override
+   public void start(final Stage stage) throws Exception
+   {
+      final Group rootGroup = new Group();
+      final Scene scene = new Scene(rootGroup, 600, 400, Color.GHOSTWHITE);
+      stage.setScene(scene);
+      stage.setTitle("JavaFX 2 Animations");
+      stage.show();
+      applyAnimation(rootGroup);
+   }
+
+   /**
+    * Main function for running JavaFX application.
+    * 
+    * @param arguments Command-line arguments; optional first argument is the
+    *    opacity of the path to be displayed (0 effectively renders path
+    *    invisible).
+    */
+   public static void main(final String[] arguments)
+   {
+      Application.launch(arguments);
+   }
 }
