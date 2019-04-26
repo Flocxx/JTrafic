@@ -1,4 +1,8 @@
+package projet;
+
 import java.util.ArrayList;
+import point.*;
+import route.*;
 
 public class Ville {
 	private double pourcentageDuTraffic;
