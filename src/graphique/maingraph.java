@@ -2,11 +2,14 @@ package graphique;
 
 
 
+import java.util.List;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Application.Parameters;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -19,6 +22,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -26,9 +30,36 @@ public class maingraph extends Application{
 	  public static void main(String[] args) {
 	        Application.launch(args);
 	    }
+	  
+	   private PathTransition generatePathTransition(final Shape shape, final Path path)
+	   {
+	      final PathTransition pathTransition = new PathTransition();
+	      pathTransition.setDuration(Duration.seconds(8.0));
+	      pathTransition.setDelay(Duration.seconds(2.0));
+	      pathTransition.setPath(path);
+	      pathTransition.setNode(shape);
+	      pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+	      pathTransition.setCycleCount(Timeline.INDEFINITE);
+	      pathTransition.setAutoReverse(true);
+	      pathTransition.play();
+	      return pathTransition;
+	   }
+	  
+
+	   
+	  
+	  private Path generatePathAB(final Circle VilleA, final Circle VilleB) {
+		  final Path path = new Path();
+		  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()));
+		  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()));
+		  path.setOpacity(0);
+		  return path;
+	  }
+	  
+	  
 	 public void start(Stage primaryStage) {
 	       Group root = new Group();
-	       Scene scene = new Scene(root, 800, 600, Color.WHITE);
+	       Scene scene = new Scene(root, 1200, 1200, Color.WHITE);
 	       primaryStage.setScene(scene);
 	       primaryStage.setTitle("Ouais le rond");
 	       primaryStage.show();
@@ -37,7 +68,8 @@ public class maingraph extends Application{
 	       CreateVille.setContour(VilleA, "red", 5);
 	       root.getChildren().add(Villes);
 	       Circle VilleB = new Circle(300, 400, 50, Color.RED);
-	       Villes.getChildren().addAll(VilleB, VilleA);
+	       Circle VilleC = new Circle(600.0,600.0,80.0, Color.BLUE);
+	       Villes.getChildren().addAll(VilleB, VilleA, VilleC);
 	       System.out.println(VilleA.getCenterX());
 	       
            Group Line = new Group();
@@ -50,29 +82,11 @@ public class maingraph extends Application{
            Group Voitures = new Group();
            
           Rectangle Voiture1 = new Rectangle(routeAB.getStartX(),routeAB.getStartY(),5.0,5.0);
-          
-         Group chemin = new Group();
-          
-          Path path = new Path();
-          path.getElements().add(new MoveTo(routeAB.getStartX(), routeAB.getStartY()));
-          path.getElements().add(new LineTo(routeAB.getEndX(),routeAB.getEndY()));
-          path.setOpacity(0);
-          //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-          final PathTransition pathTransition = new PathTransition();
-          pathTransition.setDuration(Duration.seconds(8.0));
-          pathTransition.setDelay(Duration.seconds(2.0));
-          pathTransition.setPath(path);
-          pathTransition.setNode(Voiture1);
-          pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-          pathTransition.setCycleCount(Timeline.INDEFINITE);
-          pathTransition.setAutoReverse(true);
-          root.getChildren().add(path);
-          pathTransition.play();
-          System.out.println(pathTransition);
-          root.getChildren().add(chemin);
-          chemin.getChildren().add(path);
           Voitures.getChildren().addAll(Voiture1);
           root.getChildren().add(Voitures);
+
+         generatePathTransition(Voiture1,generatePathAB(VilleC, VilleB));
+          //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
 
 }
 }
