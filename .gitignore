@@ -1,1 +1,8 @@
 /bin/
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/misc.xml
+.idea/modules.xml
+JTrafic.eml
+JTrafic.iml
+.classpath
