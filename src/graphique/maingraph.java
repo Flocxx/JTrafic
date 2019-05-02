@@ -116,27 +116,47 @@ public class maingraph extends Application{
         	  
               @Override
               public void handle(ActionEvent event) {
-            	int villeDepart;
-            	villeDepart=rand.nextInt(4);
-            	switch(villeDepart) {
+            	int numberStart;
+            	Circle TownStart= new Circle();
+            	numberStart=rand.nextInt(4);
+            	switch(numberStart) {
             	case 0:
-            		Voitures.getChildren().add(generateCar(generatePathAB(VilleA, VilleD)));
+            		TownStart = VilleA;
             		break;
             	case 1:
-            		Voitures.getChildren().add(generateCar(generatePathAB(VilleB, VilleD)));
+            		TownStart = VilleB;
             		break;
             	case 2:
-            		Voitures.getChildren().add(generateCar(generatePathAB(VilleC, VilleD)));
+            		TownStart = VilleC;
             		break;
             	case 3:
-            		Voitures.getChildren().add(generateCar(generatePathAB(VilleD, VilleC)));
+            		TownStart = VilleD;
             	break;
             	case 4:
-            		Voitures.getChildren().add(generateCar(generatePathAB(VilleE, VilleD)));
+            		TownStart = VilleE;
             		break;
             	}
-            	
-            	System.out.println(generateCar(generatePathAB(VilleE, VilleD)));
+            	int numberEnd;
+            	Circle TownEnd= new Circle();
+            	numberEnd=rand.nextInt(4);
+            	switch(numberEnd) {
+            	case 0:
+            		TownEnd = VilleA;
+            		break;
+            	case 1:
+            		TownEnd = VilleB;
+            		break;
+            	case 2:
+            		TownEnd = VilleC;
+            		break;
+            	case 3:
+            		TownEnd = VilleD;
+            	break;
+            	case 4:
+            		TownEnd = VilleE;
+            		break;
+            	}
+            	Voitures.getChildren().add(generateCar(generatePathAB(TownStart, TownEnd)));
               }
           });
          
