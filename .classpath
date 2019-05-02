@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.base.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.media.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx.web.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/javafx-swt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vande/eclipse-workspace/JavaFX/lib/src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
