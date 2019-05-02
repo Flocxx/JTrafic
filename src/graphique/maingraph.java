@@ -15,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.Line;
@@ -55,7 +56,13 @@ public class maingraph extends Application{
 		  path.setOpacity(0);
 		  return path;
 	  }
-	  
+	  private Line generateRouteAB(final Circle VilleA, final Circle VilleB, int width) {
+		  Line routeAB = new Line(VilleA.getCenterX(), VilleA.getCenterY(), VilleB.getCenterX(),VilleB.getCenterY());
+		  routeAB.setStrokeWidth(width);
+		  routeAB.setStroke(Color.GREY);
+		  return routeAB;
+		  
+	  }
 	  
 	 public void start(Stage primaryStage) {
 	       Group root = new Group();
@@ -69,19 +76,23 @@ public class maingraph extends Application{
 	       root.getChildren().add(Villes);
 	       Circle VilleB = new Circle(300, 400, 50, Color.RED);
 	       Circle VilleC = new Circle(600.0,600.0,80.0, Color.BLUE);
-	       Villes.getChildren().addAll(VilleB, VilleA, VilleC);
+	       Circle VilleD = new Circle(200, 700, 200, Color.CYAN);
+	       Circle VilleE = new Circle( 800, 900, 100, Color.YELLOW);
+	       Villes.getChildren().addAll(VilleB, VilleA, VilleC, VilleD, VilleE);
 	       System.out.println(VilleA.getCenterX());
 	       
            Group Line = new Group();
-           Line routeAB = new Line(VilleA.getCenterX(), VilleA.getCenterY(), VilleB.getCenterX(),VilleB.getCenterY());
-           routeAB.setStroke(Color.YELLOW);
-           routeAB.setStrokeWidth(5);
-           Line.getChildren().add(routeAB);
+
+           Line.getChildren().add(generateRouteAB(VilleA, VilleB, 5));
+           Line.getChildren().add(generateRouteAB(VilleC, VilleB, 5));
+           Line.getChildren().add(generateRouteAB(VilleD, VilleB, 5));
+           Line.getChildren().add(generateRouteAB(VilleE, VilleC, 5));
+           Line.getChildren().add(generateRouteAB(VilleD, VilleE, 15));
            root.getChildren().add(Line);
            
            Group Voitures = new Group();
            
-          Rectangle Voiture1 = new Rectangle(routeAB.getStartX(),routeAB.getStartY(),5.0,5.0);
+          Rectangle Voiture1 = new Rectangle(VilleA.getCenterX(),VilleA.getCenterY(),5.0,5.0);
           Voitures.getChildren().addAll(Voiture1);
           root.getChildren().add(Voitures);
 
