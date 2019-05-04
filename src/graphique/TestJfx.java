@@ -65,7 +65,7 @@ public class TestJfx extends Application {
 	      pathTransition.setCycleCount(Timeline.INDEFINITE);
 	      pathTransition.setAutoReverse(true);
 	      pathTransition.play();
-	      Thread mouvement = new Thread(new Runnable() {
+	      /*Thread mouvement = new Thread(new Runnable() {
 	    	  public void run() {
 	    		  while(true) {
 	    		  for(Rectangle autreBlock : rectangleArrayList) {
@@ -78,8 +78,8 @@ public class TestJfx extends Application {
 	    	      }
 	    		  }
 	    	  }
-	      });
-	      mouvement.start();
+	      });*/
+	      //mouvement.start();
 	      return pathTransition;
 	   }
     

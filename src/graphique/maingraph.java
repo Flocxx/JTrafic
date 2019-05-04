@@ -2,6 +2,7 @@ package graphique;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -34,6 +35,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class maingraph extends Application{
+	
+	private ArrayList<Circle> listeVille;
+	private ArrayList<Line> listeTraitRoutes;
+	
 	  public static void main(String[] args) {
 	        Application.launch(args);
 	    }
@@ -98,30 +103,38 @@ public class maingraph extends Application{
 	       primaryStage.setScene(scene);
 	       primaryStage.setTitle("Ouais le rond");
 	       primaryStage.show();
-	       Circle VilleA = new Circle(200,150,75, Color.GREEN); //(X,Y,taille)
-	       //CreateVille.setContour(VilleA, "red", 5);
-	       Circle VilleB = new Circle(600, 150, 75, Color.RED);
-	       Circle VilleC = new Circle(1000,150,75, Color.BLUE);
-	       Circle VilleD = new Circle(200, 450, 75, Color.CYAN);
-	       Circle VilleE = new Circle( 600, 450, 75, Color.YELLOW);
-	       Circle VilleF = new Circle( 1000, 450, 75, Color.PURPLE);
-	       root.getChildren().addAll(VilleB, VilleA, VilleC, VilleD, VilleE,VilleF);
-	       System.out.println(VilleA.getCenterX());
+	       listeVille = new ArrayList<Circle>();
+	       //(X,Y,taille)
+	       listeVille.add(new Circle(200,150,75, Color.GREEN));
+	       listeVille.add(new Circle(600, 150, 75, Color.RED));
+	       listeVille.add(new Circle(1000,150,75, Color.BLUE));
+	       listeVille.add(new Circle(200, 450, 75, Color.CYAN));
+	       listeVille.add(new Circle(600, 450, 75, Color.YELLOW));
+	       listeVille.add(new Circle(1000, 450, 75, Color.PURPLE));
+	       root.getChildren().addAll(listeVille);
+	       System.out.println(listeVille.get(0).getCenterX());
 	       
-           
+	       listeTraitRoutes = new ArrayList<Line>();
+           for(Circle i:listeVille) {
+        	   for(Circle j:listeVille) {
+        		   if(i != j) {	//Ne pas créer  de route ayant la meme ville de depart et d'arrivee
+        			   listeTraitRoutes.add(generateRouteAB(i,j,5));
+        		   }
+        	   }
+           }
 
-           Line Line1=generateRouteAB(VilleA, VilleB, 5);
+           /*Line Line1=generateRouteAB(VilleA, VilleB, 5);
            Line Line2=generateRouteAB(VilleA, VilleC, 5);
            Line Line3=generateRouteAB(VilleB, VilleD, 5);
            Line Line4=generateRouteAB(VilleD, VilleE, 15);
-           Line Line5=generateRouteAB(VilleE, VilleC, 15);
-           root.getChildren().addAll(Line1,Line2,Line3,Line4,Line5);
+           Line Line5=generateRouteAB(VilleE, VilleC, 15);*/
+           root.getChildren().addAll(listeTraitRoutes);
            
            
            Group Voitures = new Group();
            
           
-          Rectangle Voiture2 = new Rectangle(VilleA.getCenterX(),VilleA.getCenterY(),5.0,5.0);
+          Rectangle Voiture2 = new Rectangle(listeVille.get(0).getCenterX(),listeVille.get(0).getCenterY(),5.0,5.0);
           Voitures.getChildren().addAll(Voiture2);
          
           Button CarCreator = new Button("Generer une voiture");
@@ -134,59 +147,23 @@ public class maingraph extends Application{
               @Override
               public void handle(ActionEvent event) {
             	int numberStart;
-            	Circle TownStart= new Circle();
-            	numberStart=rand.nextInt(5);
-            	switch(numberStart) {
-            	case 0:
-            		TownStart = VilleA;
-            		break;
-            	case 1:
-            		TownStart = VilleB;
-            		break;
-            	case 2:
-            		TownStart = VilleC;
-            		break;
-            	case 3:
-            		TownStart = VilleD;
-            	break;
-            	case 4:
-            		TownStart = VilleE;
-            		break;
-            	case 5:
-            		TownStart = VilleF;
-            		break;
-            	}
+            	Circle townStart = new Circle();
+            	numberStart=rand.nextInt(listeVille.size());
+            	townStart = listeVille.get(numberStart);
             	int numberEnd;
-            	Circle TownEnd= new Circle();
-            	numberEnd=rand.nextInt(5);
-            	switch(numberEnd) {
-            	case 0:
-            		TownEnd = VilleA;
-            		break;
-            	case 1:
-            		TownEnd = VilleB;
-            		break;
-            	case 2:
-            		TownEnd = VilleC;
-            		break;
-            	case 3:
-            		TownEnd = VilleD;
-            	break;
-            	case 4:
-            		TownEnd = VilleE;
-            		break;
-            	case 5:
-            		TownEnd = VilleF;
-            		break;
-            	}
-            	Voitures.getChildren().add(generateCar(generatePathAB(TownStart, TownEnd)));
+            	Circle townEnd = new Circle();
+            	do {
+            		numberEnd = rand.nextInt(listeVille.size());
+            	} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
+            	townEnd = listeVille.get(numberEnd);
+            	Voitures.getChildren().add(generateCar(generatePathAB(townStart, townEnd)));
               }
           });
          
           root.getChildren().addAll(CarCreator,label);
           root.getChildren().add(Voitures);
          
-         Path DC = generatePathAB(VilleD, VilleC);
+         Path DC = generatePathAB(listeVille.get(4), listeVille.get(3));
          System.out.println(DC);
          generatePathTransition(Voiture2, DC);
           //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
