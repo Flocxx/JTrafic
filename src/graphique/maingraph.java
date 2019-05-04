@@ -46,8 +46,16 @@ public class maingraph extends Application{
 	      pathTransition.setPath(path);
 	      pathTransition.setNode(shape);
 	      pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-	      pathTransition.setCycleCount(Timeline.INDEFINITE);
-	      pathTransition.setAutoReverse(true);
+	      pathTransition.setCycleCount(0);
+	      pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent fade) {
+				// TODO Auto-generated method stub
+			shape.setOpacity(0);
+			//shape.fireEvent(fade);
+			}});
+	      pathTransition.setAutoReverse(false);
 	      pathTransition.play();
 	      return pathTransition;
 	   }
@@ -127,7 +135,7 @@ public class maingraph extends Application{
               public void handle(ActionEvent event) {
             	int numberStart;
             	Circle TownStart= new Circle();
-            	numberStart=rand.nextInt(4);
+            	numberStart=rand.nextInt(5);
             	switch(numberStart) {
             	case 0:
             		TownStart = VilleA;
@@ -144,10 +152,13 @@ public class maingraph extends Application{
             	case 4:
             		TownStart = VilleE;
             		break;
+            	case 5:
+            		TownStart = VilleF;
+            		break;
             	}
             	int numberEnd;
             	Circle TownEnd= new Circle();
-            	numberEnd=rand.nextInt(4);
+            	numberEnd=rand.nextInt(5);
             	switch(numberEnd) {
             	case 0:
             		TownEnd = VilleA;
@@ -163,6 +174,9 @@ public class maingraph extends Application{
             	break;
             	case 4:
             		TownEnd = VilleE;
+            		break;
+            	case 5:
+            		TownEnd = VilleF;
             		break;
             	}
             	Voitures.getChildren().add(generateCar(generatePathAB(TownStart, TownEnd)));
