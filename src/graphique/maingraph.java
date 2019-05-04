@@ -69,6 +69,15 @@ public class maingraph extends Application{
 		  return routeAB;
 		  
 	  }
+	  /**private Line generateDemiRouteAB(final Line LineA, final Line LineB, int width) {
+		  Line routeAB = new Line(LineA.getCenterX(), LineA.getCenterY(), LineB.getCenterX(),LineB.getCenterY());
+		  routeAB.setStrokeWidth(width);
+		  routeAB.setStroke(Color.PINK);
+		  return routeAB;
+		  
+	  }*/
+	  
+
 	  private Rectangle generateCar(Path chemin) {
 		final Rectangle car = new Rectangle(chemin.getLayoutX(), chemin.getLayoutY(),5.0,5.0);
 		generatePathTransition(car, chemin);
@@ -77,29 +86,29 @@ public class maingraph extends Application{
 	  
 	 public void start(Stage primaryStage) {
 	       Group root = new Group();
-	       Scene scene = new Scene(root, 1200, 1200, Color.WHITE);
+	       Scene scene = new Scene(root, 1200, 600, Color.WHITE);
 	       primaryStage.setScene(scene);
 	       primaryStage.setTitle("Ouais le rond");
 	       primaryStage.show();
-	       Group Villes = new Group();
-	       Circle VilleA = new Circle(200.0,200.0,100.0, Color.GREEN);
-	       CreateVille.setContour(VilleA, "red", 5);
-	       root.getChildren().add(Villes);
-	       Circle VilleB = new Circle(300, 400, 50, Color.RED);
-	       Circle VilleC = new Circle(600.0,600.0,80.0, Color.BLUE);
-	       Circle VilleD = new Circle(200, 700, 200, Color.CYAN);
-	       Circle VilleE = new Circle( 800, 900, 100, Color.YELLOW);
-	       Villes.getChildren().addAll(VilleB, VilleA, VilleC, VilleD, VilleE);
+	       Circle VilleA = new Circle(200,150,75, Color.GREEN); //(X,Y,taille)
+	       //CreateVille.setContour(VilleA, "red", 5);
+	       Circle VilleB = new Circle(600, 150, 75, Color.RED);
+	       Circle VilleC = new Circle(1000,150,75, Color.BLUE);
+	       Circle VilleD = new Circle(200, 450, 75, Color.CYAN);
+	       Circle VilleE = new Circle( 600, 450, 75, Color.YELLOW);
+	       Circle VilleF = new Circle( 1000, 450, 75, Color.PURPLE);
+	       root.getChildren().addAll(VilleB, VilleA, VilleC, VilleD, VilleE,VilleF);
 	       System.out.println(VilleA.getCenterX());
 	       
-           Group Line = new Group();
+           
 
-           Line.getChildren().add(generateRouteAB(VilleA, VilleB, 5));
-           Line.getChildren().add(generateRouteAB(VilleC, VilleB, 5));
-           Line.getChildren().add(generateRouteAB(VilleD, VilleB, 5));
-           Line.getChildren().add(generateRouteAB(VilleE, VilleC, 5));
-           Line.getChildren().add(generateRouteAB(VilleD, VilleE, 15));
-           root.getChildren().add(Line);
+           Line Line1=generateRouteAB(VilleA, VilleB, 5);
+           Line Line2=generateRouteAB(VilleA, VilleC, 5);
+           Line Line3=generateRouteAB(VilleB, VilleD, 5);
+           Line Line4=generateRouteAB(VilleD, VilleE, 15);
+           Line Line5=generateRouteAB(VilleE, VilleC, 15);
+           root.getChildren().addAll(Line1,Line2,Line3,Line4,Line5);
+           
            
            Group Voitures = new Group();
            
