@@ -107,7 +107,7 @@ public class maingraph extends Application{
 	  
 
 	  private Rectangle generateCar(Path chemin) {
-		final Rectangle car = new Rectangle(chemin.getLayoutX(), chemin.getLayoutY(),5.0,5.0);
+		final Rectangle car = new Rectangle(chemin.getLayoutX(), chemin.getLayoutY(),5.0,2.5);
 		generatePathTransition(car, chemin);
 		  return car;
 	  }
@@ -135,11 +135,11 @@ public class maingraph extends Application{
         	   for(Circle j:listeVille) {
         		   if(i != j) {	//Ne pas créer  de route ayant la meme ville de depart et d'arrivee
         			  if(count1 == 0) {
-        				  listeTraitRoutes.add(generateRouteAB(i,j,30));
+        				  listeTraitRoutes.add(generateRouteAB(i,j,15));
         			  }else if(count1 == 1){
-        				  listeTraitRoutes.add(generateRouteAB(i,j,20));
-        			  }else{
         				  listeTraitRoutes.add(generateRouteAB(i,j,10));
+        			  }else{
+        				  listeTraitRoutes.add(generateRouteAB(i,j,5));
         			  }
         			  if(count1 != 3) {
         				  count1++;
@@ -160,9 +160,7 @@ public class maingraph extends Application{
            
            Group Voitures = new Group();
            
-          
-          Rectangle Voiture2 = new Rectangle(listeVille.get(0).getCenterX(),listeVille.get(0).getCenterY(),5.0,5.0);
-          Voitures.getChildren().addAll(Voiture2);
+         
          
           Button CarCreator = new Button("Generer une voiture");
           
@@ -192,7 +190,6 @@ public class maingraph extends Application{
          
          Path DC = generatePathAB(listeVille.get(4), listeVille.get(3));
          System.out.println(DC);
-         generatePathTransition(Voiture2, DC);
           //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
 
 }
