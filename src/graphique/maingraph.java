@@ -70,8 +70,23 @@ public class maingraph extends Application{
 	  
 	  private Path generatePathAB(final Circle VilleA, final Circle VilleB) {
 		  final Path path = new Path();
-		  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()));
-		  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()));
+		  if(VilleA.getCenterX()<VilleB.getCenterX()) {
+		  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()+5));
+		  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()+5));
+		  }
+		  else if(VilleA.getCenterX()>VilleB.getCenterX()) {
+			  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()-5));
+			  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()-5));
+			  }
+		  else if(VilleA.getCenterY()>VilleB.getCenterY()) {
+			  path.getElements().add(new MoveTo(VilleA.getCenterX()+5, VilleA.getCenterY()));
+			  path.getElements().add(new LineTo(VilleB.getCenterX()+5, VilleB.getCenterY()));
+			  }
+		  else if(VilleA.getCenterY()<VilleB.getCenterY()) {
+			  path.getElements().add(new MoveTo(VilleA.getCenterX()-5, VilleA.getCenterY()));
+			  path.getElements().add(new LineTo(VilleB.getCenterX()-5, VilleB.getCenterY()));
+			  }
+		  
 		  path.setOpacity(3);
 		  return path;
 	  }
@@ -115,10 +130,22 @@ public class maingraph extends Application{
 	       System.out.println(listeVille.get(0).getCenterX());
 	       
 	       listeTraitRoutes = new ArrayList<Line>();
+	       int count1 = 0;
            for(Circle i:listeVille) {
         	   for(Circle j:listeVille) {
         		   if(i != j) {	//Ne pas créer  de route ayant la meme ville de depart et d'arrivee
-        			   listeTraitRoutes.add(generateRouteAB(i,j,5));
+        			  if(count1 == 0) {
+        				  listeTraitRoutes.add(generateRouteAB(i,j,30));
+        			  }else if(count1 == 1){
+        				  listeTraitRoutes.add(generateRouteAB(i,j,20));
+        			  }else{
+        				  listeTraitRoutes.add(generateRouteAB(i,j,10));
+        			  }
+        			  if(count1 != 3) {
+        				  count1++;
+        			  }else{
+        				  count1 = 0;
+        			  }
         		   }
         	   }
            }
