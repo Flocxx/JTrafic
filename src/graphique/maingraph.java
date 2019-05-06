@@ -126,7 +126,7 @@ public class maingraph extends Application{
 	       listeVille.add(new Circle(200, 450, 75, Color.CYAN));
 	       listeVille.add(new Circle(600, 450, 75, Color.YELLOW));
 	       listeVille.add(new Circle(1000, 450, 75, Color.PURPLE));
-	       root.getChildren().addAll(listeVille);
+	      // root.getChildren().addAll(listeVille);
 	       System.out.println(listeVille.get(0).getCenterX());
 	       
 	       listeTraitRoutes = new ArrayList<Line>();
@@ -184,7 +184,22 @@ public class maingraph extends Application{
             	Voitures.getChildren().add(generateCar(generatePathAB(townStart, townEnd)));
               }
           });
-         
+          //Gestion des collisions
+          Shape inter = Shape.intersect(listeTraitRoutes.get(0), listeTraitRoutes.get(2));
+          System.out.println(inter.getLayoutBounds().getWidth() + ":" + inter.getLayoutBounds().getHeight());
+          System.out.println(listeTraitRoutes.get(3));
+          if(inter.getLayoutBounds().getHeight()<=0 || inter.getLayoutBounds().getWidth()<=0) {
+              System.out.println("No intersection");
+          }
+          else {
+              System.out.println("intersection detected");
+              System.out.println(inter.getLayoutX());
+              Circle point = new Circle(inter.getBoundsInParent().getMaxX(), inter.getBoundsInParent().getMaxY(), 15, Color.BLUE);
+              listeVille.add(point);
+              root.getChildren().addAll(listeVille);
+              
+          }
+          //fin collisions
           root.getChildren().addAll(CarCreator,label);
           root.getChildren().add(Voitures);
          
