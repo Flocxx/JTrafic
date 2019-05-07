@@ -39,6 +39,7 @@ public class maingraph extends Application{
 	private ArrayList<Circle> listeVille;
 	private ArrayList<Line> listeTraitRoutes;
 	private ArrayList<Point> listeIntersection;
+	private ArrayList<Rectangle> listeVoiture;
 	
 	  public static void main(String[] args) {
 	        Application.launch(args);
@@ -98,14 +99,6 @@ public class maingraph extends Application{
 		  return routeAB;
 		  
 	  }
-	  /**private Line generateDemiRouteAB(final Line LineA, final Line LineB, int width) {
-		  Line routeAB = new Line(LineA.getCenterX(), LineA.getCenterY(), LineB.getCenterX(),LineB.getCenterY());
-		  routeAB.setStrokeWidth(width);
-		  routeAB.setStroke(Color.PINK);
-		  return routeAB;
-		  
-	  }*/
-	  
 
 	  private Rectangle generateCar(Path chemin) {
 		final Rectangle car = new Rectangle(chemin.getLayoutX(), chemin.getLayoutY(),5.0,2.5);
@@ -159,8 +152,8 @@ public class maingraph extends Application{
            root.getChildren().addAll(listeTraitRoutes);
            
            
-           Group Voitures = new Group();
-           
+          Group voitures = new Group();
+          listeVoiture = new ArrayList<Rectangle>(); 
          
          
           Button CarCreator = new Button("Generer une voiture");
@@ -182,7 +175,9 @@ public class maingraph extends Application{
             		numberEnd = rand.nextInt(listeVille.size());
             	} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
             	townEnd = listeVille.get(numberEnd);
-            	Voitures.getChildren().add(generateCar(generatePathAB(townStart, townEnd)));
+            	Rectangle voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
+            	listeVoiture.add(voitutreTmp);
+            	voitures.getChildren().add(voitutreTmp);
               }
           });
           //Gestion des collisions
@@ -195,7 +190,7 @@ public class maingraph extends Application{
           root.getChildren().addAll(listeVille);
           //fin collisions
           root.getChildren().addAll(CarCreator,label);
-          root.getChildren().add(Voitures);
+          root.getChildren().add(voitures);
          
          Path DC = generatePathAB(listeVille.get(4), listeVille.get(3));
          System.out.println(DC);
