@@ -1,6 +1,6 @@
 package graphique;
 
-
+import point.Point;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +38,7 @@ public class maingraph extends Application{
 	
 	private ArrayList<Circle> listeVille;
 	private ArrayList<Line> listeTraitRoutes;
+	private ArrayList<Point> listeIntersection;
 	
 	  public static void main(String[] args) {
 	        Application.launch(args);
@@ -185,20 +186,13 @@ public class maingraph extends Application{
               }
           });
           //Gestion des collisions
-          Shape inter = Shape.intersect(listeTraitRoutes.get(0), listeTraitRoutes.get(2));
-          System.out.println(inter.getLayoutBounds().getWidth() + ":" + inter.getLayoutBounds().getHeight());
-          System.out.println(listeTraitRoutes.get(3));
-          if(inter.getLayoutBounds().getHeight()<=0 || inter.getLayoutBounds().getWidth()<=0) {
-              System.out.println("No intersection");
+          listeIntersection = new ArrayList<Point>();
+          for (Line i:listeTraitRoutes) {
+        	  for(Line j:listeTraitRoutes) {
+        		  addCollision(i,j,root);
+        	  }
           }
-          else {
-              System.out.println("intersection detected");
-              System.out.println(inter.getLayoutX());
-              Circle point = new Circle(inter.getBoundsInParent().getMaxX(), inter.getBoundsInParent().getMaxY(), 15, Color.BLUE);
-              listeVille.add(point);
-              root.getChildren().addAll(listeVille);
-              
-          }
+          root.getChildren().addAll(listeVille);
           //fin collisions
           root.getChildren().addAll(CarCreator,label);
           root.getChildren().add(Voitures);
@@ -208,4 +202,40 @@ public class maingraph extends Application{
           //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
 
 }
+	 
+	 public boolean addCollision (Line route1, Line route2, Group root) {
+		 Shape inter = Shape.intersect(route1, route2);
+         System.out.println(inter.getLayoutBounds().getWidth() + ":" + inter.getLayoutBounds().getHeight());
+         System.out.println(listeTraitRoutes.get(3));
+         if(inter.getLayoutBounds().getHeight()<=0 || inter.getLayoutBounds().getWidth()<=0) {
+             System.out.println("No intersection");
+             return false;
+         }
+         else {
+             System.out.println("intersection detected");
+             System.out.println(inter.getLayoutX());
+             Circle point = new Circle(inter.getBoundsInParent().getMaxX(), inter.getBoundsInParent().getMaxY(), 15, Color.BLACK);
+             Point intersect = new Point(inter.getBoundsInParent().getMaxX(),inter.getBoundsInParent().getMaxY());
+             boolean isIntersection = intersectionExist(intersect);	//On verifie si l'interesection a deja ete detecte et creer 
+             if(!isIntersection) {
+            	 listeVille.add(point);
+                 listeIntersection.add(intersect);
+                 System.out.println("intersection added");
+             }else {
+            	 System.out.println("intersection already exist");
+             }
+             return true;
+         }
+	 }
+	 
+	 public boolean intersectionExist(Point test) {
+		 boolean res = false;
+		 for(Point i:listeIntersection) {
+			 if (i.equals(test)) {
+				 res = true;
+			 }
+		 }
+		 return res;
+	 }
+	 
 }
