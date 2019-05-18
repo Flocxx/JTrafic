@@ -8,16 +8,18 @@ public class Intersection extends Point{
 	private final boolean isVille;
 	
 	public Intersection(double xPos,  double  yPos, Segment route1, Segment route2, boolean isCity) {
-		x = xPos;
-		y = yPos;
+		//x = xPos;
+		//y = yPos;
+		super(xPos, yPos);
 		routesAdjacentes.add(route1);
 		routesAdjacentes.add(route2);
 		isVille = isCity;
 	}
 	
 	public Intersection(Point pos,Segment route1, Segment route2, boolean isCity) {
-		x = pos.getX();
-		y = pos.getY();
+		//x = pos.getX();
+		//y = pos.getY();
+		super(pos.getX(),pos.getY());
 		routesAdjacentes.add(route1);
 		routesAdjacentes.add(route2);
 		isVille = isCity;
@@ -25,6 +27,18 @@ public class Intersection extends Point{
 	
 	public void ajoutRouteAdjacente(Segment route) {
 		routesAdjacentes.add(route);
+	}
+	
+	public boolean isEgal(Intersection intersect) {
+		if(x == intersect.getX() && y == intersect.getY()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean getIsVille() {
+		return isVille;
 	}
 
 }

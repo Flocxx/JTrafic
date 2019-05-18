@@ -1,5 +1,6 @@
 package graphique;
 
+import point.Intersection;
 import point.Point;
 import point.Segment;
 
@@ -40,8 +41,9 @@ public class maingraph extends Application{
 	private ArrayList<Circle> listeVille;
 	private ArrayList<Line> listeTraitRoutes;
 	private ArrayList<Segment> listeSegment;
-	private ArrayList<Point> listeIntersection;
+	private ArrayList<Intersection> listeIntersection;
 	private ArrayList<Rectangle> listeVoiture;
+	private ArrayList<Circle> listeTraceIntersection;
 	
 	  public static void main(String[] args) {
 	        Application.launch(args);
@@ -168,7 +170,7 @@ public class maingraph extends Application{
            Line Line3=generateRouteAB(VilleB, VilleD, 5);
            Line Line4=generateRouteAB(VilleD, VilleE, 15);
            Line Line5=generateRouteAB(VilleE, VilleC, 15);*/
-           root.getChildren().addAll(listeTraitRoutes);
+           
            
            
           Group voitures = new Group();
@@ -200,24 +202,62 @@ public class maingraph extends Application{
               }
           });
           //Gestion des collisions
-          listeIntersection = new ArrayList<Point>();
-          for (Line i:listeTraitRoutes) {
+          listeIntersection = new ArrayList<Intersection>();
+          listeTraceIntersection = new ArrayList<Circle>();
+          /*for (Line i:listeTraitRoutes) {
         	  for(Line j:listeTraitRoutes) {
         		  addCollision(i,j,root);
         	  }
+          }*/
+          for(Segment i:listeSegment) {
+        	  i.findAllIntersection(listeSegment);
+        	  ArrayList<Intersection>tmp = i.getListeIntersection();
+        	  System.out.println(tmp.size());
+        	  for(Intersection j:tmp) {
+        		  ajoutIntersection(j,i,listeIntersection);	//On ajoute les intersections
+        	  }
           }
+          traceIntersection(listeIntersection);
+          System.out.println(listeIntersection.size());
           root.getChildren().addAll(listeVille);
+          root.getChildren().addAll(listeTraitRoutes);
+          root.getChildren().addAll(listeTraceIntersection);
           //fin collisions
           root.getChildren().addAll(CarCreator,label);
           root.getChildren().add(voitures);
          
-         Path DC = generatePathAB(listeVille.get(4), listeVille.get(3));
-         System.out.println(DC);
+         //Path DC = generatePathAB(listeVille.get(4), listeVille.get(3));
+         //System.out.println(DC);
           //path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
 
-}
+	 }
 	 
-	 public boolean addCollision (Line route1, Line route2, Group root) {
+	 public void traceIntersection(ArrayList<Intersection>listeIntersection) {
+		 for(Intersection i:listeIntersection) {
+			 if(i.getIsVille()) {
+				 listeTraceIntersection.add(new Circle(i.getX(),i.getY(),15,Color.WHITE));
+			 }else {
+				 listeTraceIntersection.add(new Circle(i.getX(),i.getY(),15,Color.BLACK));
+			 }
+		 }
+	 }
+	 
+	 public void ajoutIntersection(Intersection intersect, Segment routeActuel, ArrayList<Intersection>listeIntersect) {
+		 boolean exist = false;
+		 for (Intersection i:listeIntersect) {
+			 if(intersect.isEgal(i)) {	//Si l'intersection existe deja on lui ajoute juste cette route la
+				 i.ajoutRouteAdjacente(routeActuel);
+				 exist = true;
+			 }
+		 }
+		 if(!exist) {
+			 System.out.println("ajout route");
+			 listeIntersect.add(intersect);
+		 }
+	 }
+	 
+	 
+	 /*public boolean addCollision (Line route1, Line route2, Group root) {
 		 Shape inter = Shape.intersect(route1, route2);
          System.out.println(inter.getLayoutBounds().getWidth() + ":" + inter.getLayoutBounds().getHeight());
          System.out.println(listeTraitRoutes.get(3));
@@ -240,16 +280,6 @@ public class maingraph extends Application{
              }
              return true;
          }
-	 }
-	 
-	 public boolean intersectionExist(Point test) {
-		 boolean res = false;
-		 for(Point i:listeIntersection) {
-			 if (i.equals(test)) {
-				 res = true;
-			 }
-		 }
-		 return res;
-	 }
+	 }*/
 	 
 }
