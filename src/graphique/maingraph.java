@@ -1,6 +1,7 @@
 package graphique;
 
 import point.Point;
+import point.Segment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class maingraph extends Application{
 	
 	private ArrayList<Circle> listeVille;
 	private ArrayList<Line> listeTraitRoutes;
+	private ArrayList<Segment> listeSegment;
 	private ArrayList<Point> listeIntersection;
 	private ArrayList<Rectangle> listeVoiture;
 	
@@ -92,10 +94,10 @@ public class maingraph extends Application{
 		  path.setOpacity(3);
 		  return path;
 	  }
-	  private Line generateRouteAB(final Circle VilleA, final Circle VilleB, int width) {
+	  private Line generateRouteAB(final Circle VilleA, final Circle VilleB, int width, Color couleur) {
 		  Line routeAB = new Line(VilleA.getCenterX(), VilleA.getCenterY(), VilleB.getCenterX(),VilleB.getCenterY());
 		  routeAB.setStrokeWidth(width);
-		  routeAB.setStroke(Color.GREY);
+		  routeAB.setStroke(couleur);
 		  return routeAB;
 		  
 	  }
@@ -105,6 +107,16 @@ public class maingraph extends Application{
 		generatePathTransition(car, chemin);
 		  return car;
 	  }
+	  
+	 public boolean segmentExist(Segment segmentA) {
+		 boolean res = false;
+		 for(Segment i:listeSegment) {
+			 if(segmentA.isEgal(i)) {
+				 res = true;
+			 }
+		 }
+		 return res;
+	 }
 	  
 	 public void start(Stage primaryStage) {
 	       Group root = new Group();
@@ -124,21 +136,28 @@ public class maingraph extends Application{
 	       System.out.println(listeVille.get(0).getCenterX());
 	       
 	       listeTraitRoutes = new ArrayList<Line>();
+	       listeSegment = new ArrayList<Segment>();
 	       int count1 = 0;
            for(Circle i:listeVille) {
         	   for(Circle j:listeVille) {
         		   if(i != j) {	//Ne pas créer  de route ayant la meme ville de depart et d'arrivee
-        			  if(count1 == 0) {
-        				  listeTraitRoutes.add(generateRouteAB(i,j,15));
-        			  }else if(count1 == 1){
-        				  listeTraitRoutes.add(generateRouteAB(i,j,10));
-        			  }else{
-        				  listeTraitRoutes.add(generateRouteAB(i,j,5));
-        			  }
-        			  if(count1 != 3) {
-        				  count1++;
-        			  }else{
-        				  count1 = 0;
+        			  Segment tmp = new Segment(new Point(i.getCenterX(),i.getCenterY()),new Point(j.getCenterX(),j.getCenterY()));
+        			  if(!segmentExist(tmp)) {
+        				  if(count1 == 0) {
+        					  listeSegment.add(tmp);
+            				  listeTraitRoutes.add(generateRouteAB(i,j,15,Color.BLUEVIOLET));
+            			  }else if(count1 == 1){
+            				  listeSegment.add(tmp);
+            				  listeTraitRoutes.add(generateRouteAB(i,j,10,Color.RED));
+            			  }else{
+            				  listeSegment.add(tmp);
+            				  listeTraitRoutes.add(generateRouteAB(i,j,5,Color.YELLOW));
+            			  }
+            			  if(count1 != 3) {
+            				  count1++;
+            			  }else{
+            				  count1 = 0;
+            			  }
         			  }
         		   }
         	   }
