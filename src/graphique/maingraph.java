@@ -115,10 +115,10 @@ public class maingraph extends Application{
 	       listeVille = new ArrayList<Circle>();
 	       //(X,Y,taille)
 	       listeVille.add(new Circle(200,150,75, Color.GREEN));
-	       listeVille.add(new Circle(600, 150, 75, Color.RED));
+	       //listeVille.add(new Circle(600, 150, 75, Color.RED));
 	       listeVille.add(new Circle(1000,150,75, Color.BLUE));
 	       listeVille.add(new Circle(200, 450, 75, Color.CYAN));
-	       listeVille.add(new Circle(600, 450, 75, Color.YELLOW));
+	       //listeVille.add(new Circle(600, 450, 75, Color.YELLOW));
 	       listeVille.add(new Circle(1000, 450, 75, Color.PURPLE));
 	      // root.getChildren().addAll(listeVille);
 	       System.out.println(listeVille.get(0).getCenterX());
