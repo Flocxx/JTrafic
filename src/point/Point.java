@@ -1,8 +1,8 @@
 package point;
 
 public class Point {
-	private final double x;
-	private final double y;
+	protected final double x;
+	protected final double y;
 	
 	public Point(double xPos,  double  yPos) {
 		x = xPos;

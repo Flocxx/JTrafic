@@ -8,7 +8,7 @@ public class Segment {
 	private double x;
 	private double y;
 	
-	private ArrayList<Point>listeIntersection = new ArrayList<Point>();
+	private ArrayList<Intersection>listeIntersection = new ArrayList<Intersection>();
 	
 	public Segment(Point point1, Point point2) {
 		extremite1 = point1;
@@ -31,11 +31,11 @@ public class Segment {
 		Point a = autreSegment.getExtremite1();
 		Point b = autreSegment.getExtremite2();
 		if(extremite1.ifEqual(a)) {	//Intersection aux extremite => ville
-			listeIntersection.add(a);
+			listeIntersection.add(new Intersection(a,this,autreSegment,true));
 			System.out.println("Intersection a l'extremite");
 			return true;
 		}else if(extremite2.ifEqual(b)) {
-			listeIntersection.add(b);
+			listeIntersection.add(new Intersection(b,this,autreSegment,true));
 			System.out.println("Intersection a l'extremite");
 			return true;
 		}else {
@@ -55,7 +55,7 @@ public class Segment {
 		double vraiRapport = c/autreSegment.norme();
 		double resX = b1.getX() + (autreSegment.getX()*vraiRapport);
 		double resY = b1.getY() + (autreSegment.getY()*vraiRapport);
-		listeIntersection.add(new Point(resX,resY));
+		listeIntersection.add(new Intersection(resX,resY,this,autreSegment,false));
 	}
 	
 	public double norme() {
@@ -79,7 +79,7 @@ public class Segment {
 		}
 	}
 	
-	public ArrayList<Point>getListeIntersection(){
+	public ArrayList<Intersection>getListeIntersection(){
 		return listeIntersection;
 	}
 	
