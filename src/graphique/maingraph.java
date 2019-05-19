@@ -77,30 +77,38 @@ public class maingraph extends Application{
 	  private Path generatePathAB(final Circle VilleA, final Circle VilleB) {
 		  final Path path = new Path();
 		  if(VilleA.getCenterX()<VilleB.getCenterX()) {
-		  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()+5));
-		  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()+5));
+		  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()+7));
+		  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()+7));
 		  }
 		  else if(VilleA.getCenterX()>VilleB.getCenterX()) {
-			  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()-5));
-			  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()-5));
+			  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()-7));
+			  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()-7));
 			  }
 		  else if(VilleA.getCenterY()>VilleB.getCenterY()) {
-			  path.getElements().add(new MoveTo(VilleA.getCenterX()+5, VilleA.getCenterY()));
-			  path.getElements().add(new LineTo(VilleB.getCenterX()+5, VilleB.getCenterY()));
+			  path.getElements().add(new MoveTo(VilleA.getCenterX()+7, VilleA.getCenterY()));
+			  path.getElements().add(new LineTo(VilleB.getCenterX()+7, VilleB.getCenterY()));
 			  }
 		  else if(VilleA.getCenterY()<VilleB.getCenterY()) {
-			  path.getElements().add(new MoveTo(VilleA.getCenterX()-5, VilleA.getCenterY()));
-			  path.getElements().add(new LineTo(VilleB.getCenterX()-5, VilleB.getCenterY()));
+			  path.getElements().add(new MoveTo(VilleA.getCenterX()-7, VilleA.getCenterY()));
+			  path.getElements().add(new LineTo(VilleB.getCenterX()-7, VilleB.getCenterY()));
 			  }
 		  
 		  path.setOpacity(3);
 		  return path;
 	  }
 	  private Line generateRouteAB(final Circle VilleA, final Circle VilleB, int width, Color couleur) {
-		  Line routeAB = new Line(VilleA.getCenterX(), VilleA.getCenterY(), VilleB.getCenterX(),VilleB.getCenterY());
+		  Line routeAB = new Line(VilleA.getCenterX()-3, VilleA.getCenterY()-6, VilleB.getCenterX()-3,VilleB.getCenterY()-6);
 		  routeAB.setStrokeWidth(width);
 		  routeAB.setStroke(couleur);
 		  return routeAB;
+		  
+	  }
+	  
+	  private Line generateRouteBA(final Circle VilleA, final Circle VilleB, int width, Color couleur) {
+		  Line routeBA = new Line(VilleA.getCenterX()+3, VilleA.getCenterY()+6, VilleB.getCenterX()+3,VilleB.getCenterY()+6);
+		  routeBA.setStrokeWidth(width);
+		  routeBA.setStroke(couleur);
+		  return routeBA;
 		  
 	  }
 
@@ -148,7 +156,7 @@ public class maingraph extends Application{
         			  if(!segmentExist(tmp)) {
         				  if(count1 == 0) {
         					  listeSegment.add(tmp);
-            				  listeTraitRoutes.add(generateRouteAB(i,j,15,Color.BLUEVIOLET));
+            				  listeTraitRoutes.add(generateRouteAB(i,j,15,Color.PURPLE));
             			  }else if(count1 == 1){
             				  listeSegment.add(tmp);
             				  listeTraitRoutes.add(generateRouteAB(i,j,10,Color.RED));
@@ -161,6 +169,23 @@ public class maingraph extends Application{
             			  }else{
             				  count1 = 0;
             			  }
+        			  }
+        			  else {
+        				  if(count1 == 0) {
+    					  listeSegment.add(tmp);
+        				  listeTraitRoutes.add(generateRouteBA(i,j,15,Color.PURPLE));
+        			  }else if(count1 == 1){
+        				  listeSegment.add(tmp);
+        				  listeTraitRoutes.add(generateRouteBA(i,j,10,Color.RED));
+        			  }else{
+        				  listeSegment.add(tmp);
+        				  listeTraitRoutes.add(generateRouteBA(i,j,5,Color.YELLOW));
+        			  }
+        			  if(count1 != 3) {
+        				  count1++;
+        			  }else{
+        				  count1 = 0;
+        			  }
         			  }
         		   }
         	   }
