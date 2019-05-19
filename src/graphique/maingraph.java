@@ -130,18 +130,19 @@ public class maingraph extends Application{
 	  
 	 public void start(Stage primaryStage) {
 	       Group root = new Group();
-	       Scene scene = new Scene(root, 1200, 600, Color.WHITE);
+	       Scene scene = new Scene(root, 1200, 600, Color.OLDLACE);
 	       primaryStage.setScene(scene);
-	       primaryStage.setTitle("Ouais le rond");
+	       primaryStage.setTitle("JTrafic");
 	       primaryStage.show();
+	       
 	       listeVille = new ArrayList<Circle>();
 	       //(X,Y,taille)
-	       listeVille.add(new Circle(150,200,75, Color.PINK));
-	       listeVille.add(new Circle(150,400,75, Color.GREEN));
-	       listeVille.add(new Circle(600, 100, 75, Color.RED));
-	       listeVille.add(new Circle(600,450,75, Color.BLUE));
-	       listeVille.add(new Circle(1050, 200, 75, Color.CYAN));
-	       listeVille.add(new Circle(1050, 400, 75, Color.YELLOW));
+	       listeVille.add(new Circle(70,150,60, Color.MEDIUMPURPLE));
+	       listeVille.add(new Circle(70,450,60, Color.DARKSEAGREEN));
+	       listeVille.add(new Circle(600, 60, 60, Color.PINK));
+	       listeVille.add(new Circle(600,530,60, Color.MIDNIGHTBLUE));
+	       listeVille.add(new Circle(1130, 150, 60, Color.SKYBLUE));
+	       listeVille.add(new Circle(1130, 450, 60, Color.INDIANRED));
 	       //listeVille.add(new Circle(1000, 450, 75, Color.PURPLE));
 	      // root.getChildren().addAll(listeVille);
 	       System.out.println(listeVille.get(0).getCenterX());
@@ -156,13 +157,13 @@ public class maingraph extends Application{
         			  if(!segmentExist(tmp)) {
         				  if(count1 == 0) {
         					  listeSegment.add(tmp);
-            				  listeTraitRoutes.add(generateRouteAB(i,j,15,Color.PURPLE));
+            				  listeTraitRoutes.add(generateRouteAB(i,j,15,Color.GREY));
             			  }else if(count1 == 1){
             				  listeSegment.add(tmp);
-            				  listeTraitRoutes.add(generateRouteAB(i,j,10,Color.RED));
+            				  listeTraitRoutes.add(generateRouteAB(i,j,10,Color.GREY));
             			  }else{
             				  listeSegment.add(tmp);
-            				  listeTraitRoutes.add(generateRouteAB(i,j,5,Color.YELLOW));
+            				  listeTraitRoutes.add(generateRouteAB(i,j,5,Color.GREY));
             			  }
             			  if(count1 != 3) {
             				  count1++;
@@ -173,13 +174,13 @@ public class maingraph extends Application{
         			  else {
         				  if(count1 == 0) {
     					  listeSegment.add(tmp);
-        				  listeTraitRoutes.add(generateRouteBA(i,j,15,Color.PURPLE));
+        				  listeTraitRoutes.add(generateRouteBA(i,j,15,Color.GREY));
         			  }else if(count1 == 1){
         				  listeSegment.add(tmp);
-        				  listeTraitRoutes.add(generateRouteBA(i,j,10,Color.RED));
+        				  listeTraitRoutes.add(generateRouteBA(i,j,10,Color.GREY));
         			  }else{
         				  listeSegment.add(tmp);
-        				  listeTraitRoutes.add(generateRouteBA(i,j,5,Color.YELLOW));
+        				  listeTraitRoutes.add(generateRouteBA(i,j,5,Color.GREY));
         			  }
         			  if(count1 != 3) {
         				  count1++;
@@ -203,7 +204,9 @@ public class maingraph extends Application{
           listeVoiture = new ArrayList<Rectangle>(); 
          
          
-          Button CarCreator = new Button("Generer une voiture");
+          Button CarCreator = new Button("Nouvelle voiture");
+          CarCreator.setLayoutX(125);
+          CarCreator.setLayoutY(25);
           
           Label label = new Label("");
           Random rand = new Random();
@@ -245,8 +248,9 @@ public class maingraph extends Application{
           }
           traceIntersection(listeIntersection);
           System.out.println(listeIntersection.size());
-          root.getChildren().addAll(listeVille);
           root.getChildren().addAll(listeTraitRoutes);
+          root.getChildren().addAll(listeVille);
+          
           root.getChildren().addAll(listeTraceIntersection);
           //fin collisions
           root.getChildren().addAll(CarCreator,label);
