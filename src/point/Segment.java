@@ -7,8 +7,13 @@ public class Segment {
 	private Point extremite2;
 	private double x;
 	private double y;
+	private TypeRoute type;
 	
 	private ArrayList<Intersection>listeIntersection = new ArrayList<Intersection>();
+	
+	public Segment() {
+		
+	}
 	
 	public Segment(Point point1, Point point2) {
 		extremite1 = point1;
@@ -107,6 +112,14 @@ public class Segment {
 	
 	public double getY() {
 		return y;
+	}
+	
+	public void setType(TypeRoute largeurRoute) {
+		type = largeurRoute;
+	}
+	
+	public TypeRoute getType() {
+		return type;
 	}
 	
 	public static void main(String[] args) {

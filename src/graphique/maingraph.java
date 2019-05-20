@@ -3,6 +3,7 @@ package graphique;
 import point.Intersection;
 import point.Point;
 import point.Segment;
+import point.TypeRoute;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,30 +75,41 @@ public class maingraph extends Application{
 
 	   
 	  
-	  private Path generatePathAB(final Circle VilleA, final Circle VilleB) {
+	  private Path generatePathAB(final Circle villeA, final Circle villeB) {
 		  final Path path = new Path();
-		  if(VilleA.getCenterX()<VilleB.getCenterX()) {
-		  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()+7));
-		  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()+7));
+		  Segment trajet = findSegment(new Point(villeA.getCenterX(),villeB.getCenterY()),new Point(villeB.getCenterX(),villeB.getCenterY()));
+		  TypeRoute largeurRoute = trajet.getType();
+		  double decalementVoiture = determinerDecalageMax(largeurRoute);
+		  double decalementVoitureX = 0;
+		  double decalementVoitureY = 0;
+		  if(villeA.getCenterX()<villeB.getCenterX()) {
+			  decalementVoitureY = decalementVoiture;
+			  //path.getElements().add(new MoveTo(villeA.getCenterX(), villeA.getCenterY()+decalementVoiture));
+			  //path.getElements().add(new LineTo(villeB.getCenterX(), villeB.getCenterY()+decalementVoiture));
 		  }
-		  else if(VilleA.getCenterX()>VilleB.getCenterX()) {
-			  path.getElements().add(new MoveTo(VilleA.getCenterX(), VilleA.getCenterY()-7));
-			  path.getElements().add(new LineTo(VilleB.getCenterX(), VilleB.getCenterY()-7));
+		   if(villeA.getCenterX()>villeB.getCenterX()) {
+			  decalementVoitureY = -decalementVoiture;
+			  //path.getElements().add(new MoveTo(villeA.getCenterX(), villeA.getCenterY()-decalementVoiture));
+			  //path.getElements().add(new LineTo(villeB.getCenterX(), villeB.getCenterY()-decalementVoiture));
 			  }
-		  else if(VilleA.getCenterY()>VilleB.getCenterY()) {
-			  path.getElements().add(new MoveTo(VilleA.getCenterX()+7, VilleA.getCenterY()));
-			  path.getElements().add(new LineTo(VilleB.getCenterX()+7, VilleB.getCenterY()));
+		   if(villeA.getCenterY()>villeB.getCenterY()) {
+			  decalementVoitureX = decalementVoiture;
+			  //path.getElements().add(new MoveTo(villeA.getCenterX()+decalementVoiture, villeA.getCenterY()));
+			  //path.getElements().add(new LineTo(villeB.getCenterX()+decalementVoiture, villeB.getCenterY()));
 			  }
-		  else if(VilleA.getCenterY()<VilleB.getCenterY()) {
-			  path.getElements().add(new MoveTo(VilleA.getCenterX()-7, VilleA.getCenterY()));
-			  path.getElements().add(new LineTo(VilleB.getCenterX()-7, VilleB.getCenterY()));
+		  if(villeA.getCenterY()<villeB.getCenterY()) {
+			  decalementVoitureX = decalementVoiture;
+			  //path.getElements().add(new MoveTo(villeA.getCenterX()-decalementVoiture, villeA.getCenterY()));
+			  //path.getElements().add(new LineTo(villeB.getCenterX()-decalementVoiture, villeB.getCenterY()));
 			  }
+		  path.getElements().add(new MoveTo(villeA.getCenterX()+decalementVoitureX, villeA.getCenterY()+decalementVoitureY));
+		  path.getElements().add(new LineTo(villeB.getCenterX()+decalementVoitureX, villeB.getCenterY()+decalementVoitureY));
 		  
 		  path.setOpacity(3);
 		  return path;
 	  }
 	  private Line generateRouteAB(final Circle VilleA, final Circle VilleB, int width, Color couleur) {
-		  Line routeAB = new Line(VilleA.getCenterX()-3, VilleA.getCenterY()-6, VilleB.getCenterX()-3,VilleB.getCenterY()-6);
+		  Line routeAB = new Line(VilleA.getCenterX(), VilleA.getCenterY(), VilleB.getCenterX(),VilleB.getCenterY());
 		  routeAB.setStrokeWidth(width);
 		  routeAB.setStroke(couleur);
 		  return routeAB;
@@ -156,12 +168,15 @@ public class maingraph extends Application{
         			  Segment tmp = new Segment(new Point(i.getCenterX(),i.getCenterY()),new Point(j.getCenterX(),j.getCenterY()));
         			  if(!segmentExist(tmp)) {
         				  if(count1 == 0) {
+        					  tmp.setType(TypeRoute.AUTOROUTE);
         					  listeSegment.add(tmp);
             				  listeTraitRoutes.add(generateRouteAB(i,j,15,Color.GREY));
             			  }else if(count1 == 1){
+            				  tmp.setType(TypeRoute.AUTOROUTE);
             				  listeSegment.add(tmp);
             				  listeTraitRoutes.add(generateRouteAB(i,j,10,Color.GREY));
             			  }else{
+            				  tmp.setType(TypeRoute.AUTOROUTE);
             				  listeSegment.add(tmp);
             				  listeTraitRoutes.add(generateRouteAB(i,j,5,Color.GREY));
             			  }
@@ -170,8 +185,8 @@ public class maingraph extends Application{
             			  }else{
             				  count1 = 0;
             			  }
-        			  }
-        			  else {
+        			  }//TOUCHE PAS A CA PETIT CON
+        			  /*else {
         				  if(count1 == 0) {
     					  listeSegment.add(tmp);
         				  listeTraitRoutes.add(generateRouteBA(i,j,15,Color.GREY));
@@ -187,7 +202,7 @@ public class maingraph extends Application{
         			  }else{
         				  count1 = 0;
         			  }
-        			  }
+        			  }*/
         		   }
         	   }
            }
@@ -286,6 +301,27 @@ public class maingraph extends Application{
 		 }
 	 }
 	 
+	 public Segment findSegment(Point villeACentre, Point villeBCentre) {
+		 Segment res = new Segment();
+		 for(Segment i:listeSegment) {
+			 if(i.getExtremite1().ifEqual(villeACentre) && i.getExtremite2().ifEqual(villeBCentre)) {
+				 res = i;
+			 }else if(i.getExtremite2().ifEqual(villeACentre) && i.getExtremite1().ifEqual(villeBCentre)) {
+				 res = i;
+			 }
+		 }
+		 return res;
+	 }
+	 
+	 public double determinerDecalageMax(TypeRoute largeurRoute) {
+		 if(largeurRoute == TypeRoute.AUTOROUTE) {
+			 return 7;
+		 }else if(largeurRoute == TypeRoute.NATIONAL) {
+			 return 5;
+		 }else {
+			 return 2;
+		 }
+	 }
 	 
 	 /*public boolean addCollision (Line route1, Line route2, Group root) {
 		 Shape inter = Shape.intersect(route1, route2);
