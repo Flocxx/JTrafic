@@ -70,7 +70,9 @@ public class Segment {
 		double vraiRapport = c/autreSegment.norme();
 		double resX = b1.getX() + (autreSegment.getX()*vraiRapport);
 		double resY = b1.getY() + (autreSegment.getY()*vraiRapport);
-		listeIntersection.add(new Intersection(resX,resY,this,autreSegment,false));
+		if(appartientAuSegment(new Point(resX,resY))) {
+			listeIntersection.add(new Intersection(resX,resY,this,autreSegment,false));
+		}
 	}
 	
 	public double norme() {
@@ -91,6 +93,48 @@ public class Segment {
 			return true;
 		}else {
 			return false;
+		}
+	}
+	
+	public boolean appartientAuSegment(Point testeur) {
+		boolean res = false;
+		if(testeur.getX() >= pointMinimumX().getX() && testeur.getX() <= pointMaximumX().getX()) {
+			if(testeur.getY() >= pointMinimumY().getY() && testeur.getY() <= pointMaximumY().getY()) {
+				res = true;
+			}
+		}
+		return res;
+	}
+	
+	public Point pointMinimumX() {
+		if(extremite1.getX() < extremite2.getX()) {
+			return extremite1;
+		}else {
+			return extremite2;
+		}
+	}
+	
+	public Point pointMinimumY() {
+		if(extremite1.getY() < extremite2.getY()) {
+			return extremite1;
+		}else {
+			return extremite2;
+		}
+	}
+	
+	public Point pointMaximumX() {
+		if(extremite1.getX() > extremite2.getX()) {
+			return extremite1;
+		}else {
+			return extremite2;
+		}
+	}
+	
+	public Point pointMaximumY() {
+		if(extremite1.getY() > extremite2.getY()) {
+			return extremite1;
+		}else {
+			return extremite2;
 		}
 	}
 	
