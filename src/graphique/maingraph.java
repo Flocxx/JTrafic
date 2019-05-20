@@ -5,6 +5,8 @@ import point.Point;
 import point.Segment;
 import point.TypeRoute;
 
+import voiture.Voiture;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +45,7 @@ public class maingraph extends Application{
 	private ArrayList<Line> listeTraitRoutes;
 	private ArrayList<Segment> listeSegment;
 	private ArrayList<Intersection> listeIntersection;
-	private ArrayList<Rectangle> listeVoiture;
+	private ArrayList<Voiture> listeVoiture;
 	private ArrayList<Circle> listeTraceIntersection;
 	
 	  public static void main(String[] args) {
@@ -124,8 +126,8 @@ public class maingraph extends Application{
 		  
 	  }
 
-	  private Rectangle generateCar(Path chemin) {
-		final Rectangle car = new Rectangle(chemin.getLayoutX(), chemin.getLayoutY(),5.0,2.5);
+	  private Voiture generateCar(Path chemin) {
+		final Voiture car = new Voiture(chemin.getLayoutX(), chemin.getLayoutY(),5.0,2.5);
 		generatePathTransition(car, chemin);
 		  return car;
 	  }
@@ -216,7 +218,7 @@ public class maingraph extends Application{
            
            
           Group voitures = new Group();
-          listeVoiture = new ArrayList<Rectangle>(); 
+          listeVoiture = new ArrayList<Voiture>(); 
          
          
           Button CarCreator = new Button("Nouvelle voiture");
@@ -240,7 +242,7 @@ public class maingraph extends Application{
             		numberEnd = rand.nextInt(listeVille.size());
             	} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
             	townEnd = listeVille.get(numberEnd);
-            	Rectangle voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
+            	Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
             	listeVoiture.add(voitutreTmp);
             	detecterProchaineIntersectionCar(voitutreTmp);
             	voitures.getChildren().add(voitutreTmp);
@@ -324,7 +326,7 @@ public class maingraph extends Application{
 		 }
 	 }
 	 
-	 public void detecterProchaineIntersectionCar(Rectangle voiture) {
+	 public void detecterProchaineIntersectionCar(Voiture voiture) {
 		 Thread t = new Thread(new Runnable() {
 			 public void run() {
 				 Point positionActuel = new Point(voiture.getX(),voiture.getY());
