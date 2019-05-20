@@ -54,7 +54,7 @@ public class maingraph extends Application{
 	   {
 	      final PathTransition pathTransition = new PathTransition();
 	      pathTransition.setDuration(Duration.seconds(8.0));
-	      pathTransition.setDelay(Duration.seconds(2.0));
+	      //pathTransition.setDelay(Duration.seconds(2.0));
 	      pathTransition.setPath(path);
 	      pathTransition.setNode(shape);
 	      pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -327,8 +327,10 @@ public class maingraph extends Application{
 	 public void detecterProchaineIntersectionCar(Rectangle voiture) {
 		 Thread t = new Thread(new Runnable() {
 			 public void run() {
+				 Point positionActuel = new Point(voiture.getX(),voiture.getY());
 				 while(voiture.getOpacity() != 0) {
-					 System.out.println(voiture.getX() + " : " + voiture.getY());
+					 positionActuel.setTo(voiture.getTranslateX(),voiture.getTranslateY());
+					 positionActuel.print();
 				 }
 			 }
 		 });

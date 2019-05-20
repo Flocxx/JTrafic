@@ -1,10 +1,15 @@
 package point;
 
 public class Point {
-	protected final double x;
-	protected final double y;
+	protected double x;
+	protected double y;
 	
 	public Point(double xPos,  double  yPos) {
+		x = xPos;
+		y = yPos;
+	}
+	
+	public void setTo(double xPos,  double  yPos) {
 		x = xPos;
 		y = yPos;
 	}
