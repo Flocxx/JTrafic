@@ -242,6 +242,7 @@ public class maingraph extends Application{
             	townEnd = listeVille.get(numberEnd);
             	Rectangle voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
             	listeVoiture.add(voitutreTmp);
+            	detecterProchaineIntersectionCar(voitutreTmp);
             	voitures.getChildren().add(voitutreTmp);
               }
           });
@@ -321,6 +322,17 @@ public class maingraph extends Application{
 		 }else {
 			 return 2;
 		 }
+	 }
+	 
+	 public void detecterProchaineIntersectionCar(Rectangle voiture) {
+		 Thread t = new Thread(new Runnable() {
+			 public void run() {
+				 while(voiture.getOpacity() != 0) {
+					 System.out.println(voiture.getX() + " : " + voiture.getY());
+				 }
+			 }
+		 });
+		 t.start();
 	 }
 	 
 	 /*public boolean addCollision (Line route1, Line route2, Group root) {

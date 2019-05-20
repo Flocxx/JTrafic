@@ -25,6 +25,11 @@ public class Point {
 		}
 	}
 	
+	public double calculerDistance(Point autrePoint) {
+		double res = Math.sqrt((autrePoint.getX()-x)*(autrePoint.getX()-x) + (autrePoint.getY()-y)*(autrePoint.getY()-y));
+		return res;
+	}
+	
 	public void print() {
 		System.out.println("" + x + " : " + y);
 	}
