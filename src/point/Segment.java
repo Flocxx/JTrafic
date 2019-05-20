@@ -28,7 +28,6 @@ public class Segment {
 				//Si l'autre route ne croise pas notre route a son extremite (ville)
 				if(!extremiteIsIntersection(i)) {
 					findOneIntersection(i);
-					System.out.println("Interection presente");
 				}
 			}
 		}
@@ -39,19 +38,15 @@ public class Segment {
 		Point b = autreSegment.getExtremite2();
 		if(extremite1.ifEqual(a)) {	//Intersection aux extremite => ville
 			listeIntersection.add(new Intersection(a,this,autreSegment,true));
-			System.out.println("Intersection a l'extremite");
 			return true;
 		}else if(extremite1.ifEqual(b)) {
 			listeIntersection.add(new Intersection(b,this,autreSegment,true));
-			System.out.println("Intersection a l'extremite");
 			return true;
 		}else if(extremite2.ifEqual(a)) {
 			listeIntersection.add(new Intersection(b,this,autreSegment,true));
-			System.out.println("Intersection a l'extremite");
 			return true;
 		}else if(extremite2.ifEqual(b)) {
 			listeIntersection.add(new Intersection(b,this,autreSegment,true));
-			System.out.println("Intersection a l'extremite");
 			return true;
 		}else {
 			return false;
@@ -171,9 +166,6 @@ public class Segment {
 		Segment b = new Segment(new Point(2,8), new Point(4,5));
 		Segment c = new Segment(new Point(2,6), new Point(6,9));
 		Segment d = new Segment(new Point(4,5), new Point(7,9));
-		System.out.println(a.isEgal(a));
-		System.out.println(a.isEgal(b));
-		System.out.println(a.isEgal(c));
 		a.findOneIntersection(c);
 		a.extremiteIsIntersection(d);
 		for(Point i:a.getListeIntersection()) {
