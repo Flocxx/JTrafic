@@ -120,6 +120,15 @@ public class maingraph extends Application{
 		}
 		return res;
 	}
+	
+	public void createVille() {
+		listeVille.add(new Circle(70,170,60, Color.MEDIUMPURPLE));
+		listeVille.add(new Circle(70,470,60, Color.DARKSEAGREEN));
+		listeVille.add(new Circle(600, 80, 60, Color.PINK));
+		listeVille.add(new Circle(600,550,60, Color.MIDNIGHTBLUE));
+		listeVille.add(new Circle(1130, 170, 60, Color.SKYBLUE));
+		listeVille.add(new Circle(1130, 470, 60, Color.INDIANRED));
+	}
 
 	public void start(Stage primaryStage) {
 		Group root = new Group();
@@ -128,13 +137,7 @@ public class maingraph extends Application{
 		primaryStage.setTitle("JTrafic");
 		primaryStage.show();
 		listeVille = new ArrayList<Circle>();
-		listeVille.add(new Circle(70,170,60, Color.MEDIUMPURPLE));
-		listeVille.add(new Circle(70,470,60, Color.DARKSEAGREEN));
-		listeVille.add(new Circle(600, 80, 60, Color.PINK));
-		listeVille.add(new Circle(600,550,60, Color.MIDNIGHTBLUE));
-		listeVille.add(new Circle(1130, 170, 60, Color.SKYBLUE));
-		listeVille.add(new Circle(1130, 470, 60, Color.INDIANRED));
-
+		createVille();
 		listeTraitRoutes = new ArrayList<Line>();
 		listeSegment = new ArrayList<Segment>();
 
