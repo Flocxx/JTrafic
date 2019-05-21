@@ -172,7 +172,7 @@ public class maingraph extends Application{
 
 
 		Button CarCreator = new Button("Nouvelle voiture");
-		CarCreator.setLayoutX(125);
+		CarCreator.setLayoutX(50);
 		CarCreator.setLayoutY(25);
 
 		Label label = new Label("");
@@ -198,6 +198,37 @@ public class maingraph extends Application{
 				voitures.getChildren().add(voitutreTmp);
 			}
 		});
+		
+		Button tenCars = new Button("10 voitures");
+		tenCars.setLayoutX(175);
+		tenCars.setLayoutY(25);
+		
+		tenCars.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				int numberStart;
+				int numberEnd;
+				int i=0;
+				while(i<10) {
+				Circle townStart = new Circle();
+				numberStart=rand.nextInt(listeVille.size());
+				townStart = listeVille.get(numberStart);
+				
+				Circle townEnd = new Circle();
+				do {
+					numberEnd = rand.nextInt(listeVille.size());
+				} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
+				townEnd = listeVille.get(numberEnd);
+				Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
+				listeVoiture.add(voitutreTmp);
+				detecterProchaineIntersectionCar(voitutreTmp);
+				voitures.getChildren().add(voitutreTmp);
+				i++;
+			}
+			}
+		});
+		
 		//Gestion des collisions
 		listeIntersection = new ArrayList<Intersection>();
 		listeTraceIntersection = new ArrayList<Circle>();
@@ -216,6 +247,7 @@ public class maingraph extends Application{
 		root.getChildren().addAll(listeTraceIntersection);
 		//fin collisions
 		root.getChildren().addAll(CarCreator,label);
+		root.getChildren().add(tenCars);
 		root.getChildren().add(voitures);
 	}
 
@@ -270,7 +302,7 @@ public class maingraph extends Application{
 				Point positionActuel = new Point(voiture.getX(),voiture.getY());
 				while(voiture.getOpacity() != 0) {
 					positionActuel.setTo(voiture.getTranslateX(),voiture.getTranslateY());
-					positionActuel.print();
+					//positionActuel.print();
 				}
 			}
 		});
