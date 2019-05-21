@@ -105,8 +105,8 @@ public class maingraph extends Application{
 
 	}
 
-	private Voiture generateCar(Path chemin) {
-		final Voiture car = new Voiture(chemin.getLayoutX(), chemin.getLayoutY(),5.0,2.5);
+	private Voiture generateCar(Path chemin, Segment route) {
+		final Voiture car = new Voiture(chemin.getLayoutX(), chemin.getLayoutY(),5.0,2.5,route);
 		generatePathTransition(car, chemin);
 		return car;
 	}
@@ -192,7 +192,8 @@ public class maingraph extends Application{
 					numberEnd = rand.nextInt(listeVille.size());
 				} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
 				townEnd = listeVille.get(numberEnd);
-				Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
+				Segment trajet = findSegment(townStart, townEnd);
+				Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd),trajet);
 				listeVoiture.add(voitutreTmp);
 				detecterProchaineIntersectionCar(voitutreTmp);
 				voitures.getChildren().add(voitutreTmp);
@@ -220,7 +221,10 @@ public class maingraph extends Application{
 					numberEnd = rand.nextInt(listeVille.size());
 				} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
 				townEnd = listeVille.get(numberEnd);
-				Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd));
+				Segment trajet = findSegment(townStart,townEnd);
+				Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd),trajet);
+				voitutreTmp.setPosition(townStart.getCenterX(),townEnd.getCenterY());
+				voitutreTmp.findAllIntersection();
 				listeVoiture.add(voitutreTmp);
 				detecterProchaineIntersectionCar(voitutreTmp);
 				voitures.getChildren().add(voitutreTmp);
@@ -234,7 +238,7 @@ public class maingraph extends Application{
 		listeTraceIntersection = new ArrayList<Circle>();
 
 		for(Segment i:listeSegment) {
-			i.findAllIntersection(listeSegment);
+			i.findAllIntersection(listeSegment,true);
 			ArrayList<Intersection>tmp = i.getListeIntersection();
 			for(Intersection j:tmp) {
 				ajoutIntersection(j,i,listeIntersection);	//On ajoute les intersections
@@ -285,6 +289,18 @@ public class maingraph extends Application{
 		}
 		return res;
 	}
+	
+	public Segment findSegment(Circle villeACentre, Circle villeBCentre) {
+		Segment res = new Segment();
+		for(Segment i:listeSegment) {
+			if(i.getExtremite1().ifEqual(new Point(villeACentre.getCenterX(),villeACentre.getCenterY())) && i.getExtremite2().ifEqual(new Point(villeBCentre.getCenterX(),villeBCentre.getCenterY()))) {
+				res = i;
+			}else if(i.getExtremite2().ifEqual(new Point(villeACentre.getCenterX(),villeACentre.getCenterY())) && i.getExtremite1().ifEqual(new Point(villeBCentre.getCenterX(),villeBCentre.getCenterY()))) {
+				res = i;
+			}
+		}
+		return res;
+	}
 
 	public double determinerDecalageMax(TypeRoute largeurRoute) {
 		if(largeurRoute == TypeRoute.AUTOROUTE) {
@@ -302,7 +318,7 @@ public class maingraph extends Application{
 				Point positionActuel = new Point(voiture.getX(),voiture.getY());
 				while(voiture.getOpacity() != 0) {
 					positionActuel.setTo(voiture.getTranslateX(),voiture.getTranslateY());
-					//positionActuel.print();
+					System.out.println(voiture.checkDistanceNextIntersection(positionActuel, 20));
 				}
 			}
 		});

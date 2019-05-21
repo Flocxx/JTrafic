@@ -22,31 +22,39 @@ public class Segment {
 		y = point2.getY() - point1.getY();
 	}
 	
-	public void findAllIntersection(ArrayList<Segment>autreRoutes){
+	public void findAllIntersection(ArrayList<Segment>autreRoutes,boolean addExtremite){//si on veut compter les extremites
 		for(Segment i:autreRoutes) {
 			if(!isEgal(i)) {//On ne cherche pas d'intersection avec la meme route
 				//Si l'autre route ne croise pas notre route a son extremite (ville)
-				if(!extremiteIsIntersection(i)) {
+				if(!extremiteIsIntersection(i,addExtremite)) {
 					findOneIntersection(i);
 				}
 			}
 		}
 	}
 	
-	public boolean extremiteIsIntersection(Segment autreSegment) {
+	public boolean extremiteIsIntersection(Segment autreSegment,boolean addExtremite) {
 		Point a = autreSegment.getExtremite1();
 		Point b = autreSegment.getExtremite2();
 		if(extremite1.ifEqual(a)) {	//Intersection aux extremite => ville
-			listeIntersection.add(new Intersection(a,this,autreSegment,true));
+			if(addExtremite) {
+				listeIntersection.add(new Intersection(a,this,autreSegment,true));
+			}
 			return true;
 		}else if(extremite1.ifEqual(b)) {
-			listeIntersection.add(new Intersection(b,this,autreSegment,true));
+			if(addExtremite) {
+				listeIntersection.add(new Intersection(b,this,autreSegment,true));
+			}
 			return true;
 		}else if(extremite2.ifEqual(a)) {
-			listeIntersection.add(new Intersection(b,this,autreSegment,true));
+			if(addExtremite) {
+				listeIntersection.add(new Intersection(b,this,autreSegment,true));
+			}
 			return true;
 		}else if(extremite2.ifEqual(b)) {
-			listeIntersection.add(new Intersection(b,this,autreSegment,true));
+			if(addExtremite) {
+				listeIntersection.add(new Intersection(b,this,autreSegment,true));
+			}
 			return true;
 		}else {
 			return false;
@@ -161,13 +169,18 @@ public class Segment {
 		return type;
 	}
 	
+	public void print() {
+		System.out.println("" + extremite1.getX() + " : " + extremite1.getY());
+		System.out.println("" + extremite2.getX() + " : " + extremite2.getY());
+	}
+	
 	public static void main(String[] args) {
 		Segment a = new Segment(new Point(4,5), new Point(2,8));
 		Segment b = new Segment(new Point(2,8), new Point(4,5));
 		Segment c = new Segment(new Point(2,6), new Point(6,9));
 		Segment d = new Segment(new Point(4,5), new Point(7,9));
 		a.findOneIntersection(c);
-		a.extremiteIsIntersection(d);
+		a.extremiteIsIntersection(d,true);
 		for(Point i:a.getListeIntersection()) {
 			i.print();
 		}

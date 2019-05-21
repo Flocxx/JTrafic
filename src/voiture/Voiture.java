@@ -1,5 +1,9 @@
 package voiture;
 
+import point.*;
+
+import java.util.ArrayList;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
@@ -28,6 +32,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Voiture extends Rectangle{
+	private Point position;
+	private Segment route;
+	private ArrayList<Intersection> listeCroisement = new ArrayList<Intersection>();
+	
 	public Voiture() {
 		super();
 	}
@@ -36,12 +44,47 @@ public class Voiture extends Rectangle{
 		super(width, height);
 	}
 	
-	public Voiture(double x, double y, double width, double height) {
+	public Voiture(double x, double y, double width, double height, Segment road) {
 		super(x, y, width, height);
+		route = road;
 	}
 	
 	public Voiture(double width, double height, Paint fill) {
 		super(width, height, fill);
+	}
+	
+	public Segment getRoute() {
+		return route;
+	}
+	
+	public void setPosition(Point newPosition) {
+		position = newPosition;
+	}
+	
+	public void setPosition(double x, double y) {
+		position = new Point(x,y);
+	}
+	
+	public Point getPosition() {
+		return position;
+	}
+	
+	public void findAllIntersection() {
+		ArrayList<Segment> tmp = new ArrayList<Segment>();
+		tmp.add(route);
+		route.findAllIntersection(tmp,false);
+		listeCroisement = route.getListeIntersection();
+	}
+	
+	public boolean checkDistanceNextIntersection(Point positionActuel, double distance) {
+		position = positionActuel;
+		boolean res = false;
+		for(Intersection i:listeCroisement) {
+			if(i.calculerDistance(position) < distance) {
+				res = true;
+			}
+		}
+		return res;
 	}
 	
 }
