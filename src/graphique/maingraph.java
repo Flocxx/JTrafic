@@ -42,6 +42,7 @@ import javafx.util.Duration;
 public class maingraph extends Application{
 
 	private ArrayList<Circle> listeVille;
+	private ArrayList<Rectangle> listeStop;
 	private ArrayList<Line> listeTraitRoutes;
 	private ArrayList<Segment> listeSegment;
 	private ArrayList<Intersection> listeIntersection;
@@ -130,6 +131,15 @@ public class maingraph extends Application{
 		listeVille.add(new Circle(1130, 470, 60, Color.INDIANRED));
 	}
 
+	/*public void createStop() {
+		listeStop.add(new Rectangle(70,170, Color.WHITE));
+		listeStop.add(new Rectangle(70,470, Color.WHITE));
+		listeStop.add(new Rectangle(600, 80, Color.WHITE));
+		listeStop.add(new Rectangle(600,550, Color.WHITE));
+		listeStop.add(new Rectangle(1130, 170, Color.WHITE));
+		listeStop.add(new Rectangle(1130, 470, Color.WHITE));
+	}*/
+	
 	public void start(Stage primaryStage) {
 		Group root = new Group();
 		Scene scene = new Scene(root, 1200, 640, Color.OLDLACE);
@@ -137,6 +147,8 @@ public class maingraph extends Application{
 		primaryStage.setTitle("JTrafic");
 		primaryStage.show();
 		listeVille = new ArrayList<Circle>();
+		//listeStop = new ArrayList<Rectangle>();
+		//createStop();
 		createVille();
 		listeTraitRoutes = new ArrayList<Line>();
 		listeSegment = new ArrayList<Segment>();
