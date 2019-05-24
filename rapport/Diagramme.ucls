@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="point.Segment" project="JTrafic" file="/JTrafic/src/point/Segment.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="556" width="393" x="-111" y="840"/>    
+    <position height="-1" width="-1" x="370" y="960"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <enumeration id="2" language="java" name="point.TypeRoute" project="JTrafic" file="/JTrafic/src/point/TypeRoute.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="156" width="257" x="-95" y="1436"/>    
+    <position height="-1" width="-1" x="245" y="1341"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </enumeration>  
   <class id="3" language="java" name="point.Intersection" project="JTrafic" file="/JTrafic/src/point/Intersection.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="196" width="407" x="183" y="1732"/>    
+    <position height="-1" width="-1" x="468" y="1586"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="point.Point" project="JTrafic" file="/JTrafic/src/point/Point.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="256" width="238" x="-373" y="1436"/>    
+    <position height="-1" width="-1" x="-157" y="1314"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="graphique.maingraph" project="JTrafic" 
     file="/JTrafic/src/graphique/maingraph.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="436" width="490" x="44" y="48"/>    
+    <position height="-1" width="-1" x="358" y="255"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="voiture.Voiture" project="JTrafic" file="/JTrafic/src/voiture/Voiture.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="276" width="396" x="-373" y="524"/>    
+    <position height="276" width="396" x="-385" y="558"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -56,104 +56,147 @@
     </display>  
   </class>  
   <association id="7">    
-    <bendpoint x="312" y="524"/>    
-    <bendpoint x="312" y="840"/>    
-    <bendpoint x="312" y="1436"/>    
+    <bendpoint x="41" y="558"/>    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="8" name="listeIntersection"/>      
-      <multiplicity id="9" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="10">    
-    <bendpoint x="53" y="524"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="11" name="listeSegment"/>      
-      <multiplicity id="12" minimum="0" maximum="2147483647"/>    
+      <attribute id="8" name="listeSegment">        
+        <position height="0" width="0" x="297" y="-182"/>      
+      </attribute>      
+      <multiplicity id="9" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="297" y="-182"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="13">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="14" name="extremite1"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="16">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="17" name="type"/>      
-      <multiplicity id="18" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="19">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="20" name="extremite2"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="22">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="23">    
+  <association id="10">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="24" name="listeVoiture"/>      
-      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
+      <attribute id="11" name="listeVoiture">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="12" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="26">    
-    <bendpoint x="-364" y="840"/>    
+  <association id="13">    
+    <bendpoint x="533" y="1413"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="14" name="routesAdjacentes">        
+        <position height="0" width="0" x="297" y="-182"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="297" y="-182"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="17">    
+    <bendpoint x="-416" y="874"/>    
+    <bendpoint x="-416" y="1450"/>    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="27" name="position"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="18" name="listeCroisement">        
+        <position height="0" width="0" x="94" y="-258"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="94" y="-258"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="21" name="extremite1">        
+        <position height="0" width="0" x="109" y="-264"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="109" y="-264"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="24" name="route">        
+        <position height="0" width="0" x="297" y="-182"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="297" y="-182"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <bendpoint x="-376" y="874"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="27" name="position">        
+        <position height="0" width="0" x="109" y="-264"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="109" y="-264"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="29">    
-    <bendpoint x="192" y="1436"/>    
+    <bendpoint x="459" y="1430"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="30" name="listeIntersection"/>      
-      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
+      <attribute id="30" name="listeIntersection">        
+        <position height="0" width="0" x="94" y="-258"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="94" y="-258"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="32">    
-    <bendpoint x="-404" y="840"/>    
-    <bendpoint x="-404" y="1436"/>    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="33" name="listeCroisement"/>      
-      <multiplicity id="34" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="33" name="extremite2">        
+        <position height="0" width="0" x="109" y="-264"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="109" y="-264"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <bendpoint x="787" y="872"/>    
+    <bendpoint x="705" y="1463"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="36" name="listeIntersection">        
+        <position height="0" width="0" x="94" y="-258"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="94" y="-258"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="35">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="36" name="route"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="38">    
-    <bendpoint x="213" y="1436"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="39" name="routesAdjacentes"/>      
-      <multiplicity id="40" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="39" name="type">        
+        <position height="0" width="0" x="224" y="-187"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="224" y="-187"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
