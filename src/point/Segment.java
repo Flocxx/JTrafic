@@ -173,17 +173,5 @@ public class Segment {
 		System.out.println("" + extremite1.getX() + " : " + extremite1.getY());
 		System.out.println("" + extremite2.getX() + " : " + extremite2.getY());
 	}
-	
-	public static void main(String[] args) {
-		Segment a = new Segment(new Point(4,5), new Point(2,8));
-		Segment b = new Segment(new Point(2,8), new Point(4,5));
-		Segment c = new Segment(new Point(2,6), new Point(6,9));
-		Segment d = new Segment(new Point(4,5), new Point(7,9));
-		a.findOneIntersection(c);
-		a.extremiteIsIntersection(d,true);
-		for(Point i:a.getListeIntersection()) {
-			i.print();
-		}
-	}
 
 }

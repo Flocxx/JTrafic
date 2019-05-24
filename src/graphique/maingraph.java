@@ -129,18 +129,8 @@ public class maingraph extends Application{
 		listeVille.add(new Circle(1130, 170, 60, Color.SKYBLUE));
 		listeVille.add(new Circle(1130, 470, 60, Color.INDIANRED));
 	}
-
-	public void start(Stage primaryStage) {
-		Group root = new Group();
-		Scene scene = new Scene(root, 1200, 640, Color.OLDLACE);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("JTrafic");
-		primaryStage.show();
-		listeVille = new ArrayList<Circle>();
-		createVille();
-		listeTraitRoutes = new ArrayList<Line>();
-		listeSegment = new ArrayList<Segment>();
-
+	
+	public void createRoute() {
 		int count1 = 0;
 		for(Circle i:listeVille) {
 			for(Circle j:listeVille) {
@@ -169,44 +159,21 @@ public class maingraph extends Application{
 				}
 			}
 		}
-
-		Group voitures = new Group();
-		listeVoiture = new ArrayList<Voiture>(); 
-
-
-		Button CarCreator = new Button("Nouvelle voiture");
-		CarCreator.setLayoutX(50);
-		CarCreator.setLayoutY(25);
-
-		Label label = new Label("");
-		Random rand = new Random();
-
-		CarCreator.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				int numberStart;
-				Circle townStart = new Circle();
-				numberStart=rand.nextInt(listeVille.size());
-				townStart = listeVille.get(numberStart);
-				int numberEnd;
-				Circle townEnd = new Circle();
-				do {
-					numberEnd = rand.nextInt(listeVille.size());
-				} while (numberEnd == numberStart);	//La voiture ne doit pas posséder le meme depart et la meme arrive
-				townEnd = listeVille.get(numberEnd);
-				Segment trajet = findSegment(townStart, townEnd);
-				Voiture voitutreTmp = generateCar(generatePathAB(townStart, townEnd),trajet);
-				listeVoiture.add(voitutreTmp);
-				detecterProchaineIntersectionCar(voitutreTmp);
-				voitures.getChildren().add(voitutreTmp);
+	}
+	
+	public void createIntersection() {
+		for(Segment i:listeSegment) {
+			i.findAllIntersection(listeSegment,true);
+			ArrayList<Intersection>tmp = i.getListeIntersection();
+			for(Intersection j:tmp) {
+				ajoutIntersection(j,i,listeIntersection);	//On ajoute les intersections
 			}
-		});
-		
-		Button tenCars = new Button("10 voitures");
-		tenCars.setLayoutX(175);
-		tenCars.setLayoutY(25);
-		
+		}
+		traceIntersection(listeIntersection);
+	}
+	
+	public void createBoutons(Button tenCars, Group voitures, int nbVoitures) {
+		Random rand = new Random();
 		tenCars.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -214,7 +181,7 @@ public class maingraph extends Application{
 				int numberStart;
 				int numberEnd;
 				int i=0;
-				while(i<10) {
+				while(i<nbVoitures) {
 				Circle townStart = new Circle();
 				numberStart=rand.nextInt(listeVille.size());
 				townStart = listeVille.get(numberStart);
@@ -235,24 +202,44 @@ public class maingraph extends Application{
 			}
 			}
 		});
+	}
+
+	public void start(Stage primaryStage) {
+		Group root = new Group();
+		Scene scene = new Scene(root, 1200, 640, Color.OLDLACE);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("JTrafic");
+		primaryStage.show();
+		listeVille = new ArrayList<Circle>();
+		createVille();
+		listeTraitRoutes = new ArrayList<Line>();
+		listeSegment = new ArrayList<Segment>();
 		
-		//Gestion des collisions
+		createRoute();
+
+		Group voitures = new Group();
+		listeVoiture = new ArrayList<Voiture>(); 
+
+		//Gestion des bouttons
+		Label label = new Label("");
+		Button CarCreator = new Button("Nouvelle voiture");
+		CarCreator.setLayoutX(50);
+		CarCreator.setLayoutY(25);
+		createBoutons(CarCreator, voitures, 1);
+		Button tenCars = new Button("10 voitures");
+		tenCars.setLayoutX(175);
+		tenCars.setLayoutY(25);
+		createBoutons(tenCars, voitures, 10);
+		
+		//Gestion des intersections
 		listeIntersection = new ArrayList<Intersection>();
 		listeTraceIntersection = new ArrayList<Circle>();
-
-		for(Segment i:listeSegment) {
-			i.findAllIntersection(listeSegment,true);
-			ArrayList<Intersection>tmp = i.getListeIntersection();
-			for(Intersection j:tmp) {
-				ajoutIntersection(j,i,listeIntersection);	//On ajoute les intersections
-			}
-		}
-		traceIntersection(listeIntersection);
+		createIntersection();
+		
+		//Affichage des elements
 		root.getChildren().addAll(listeTraitRoutes);
 		root.getChildren().addAll(listeVille);
-
 		root.getChildren().addAll(listeTraceIntersection);
-		//fin collisions
 		root.getChildren().addAll(CarCreator,label);
 		root.getChildren().add(tenCars);
 		root.getChildren().add(voitures);
@@ -320,8 +307,12 @@ public class maingraph extends Application{
 			public void run() {
 				Point positionActuel = new Point(voiture.getX(),voiture.getY());
 				while(voiture.getOpacity() != 0) {
+					/*int cmp = 0;
 					positionActuel.setTo(voiture.getTranslateX(),voiture.getTranslateY());
-					System.out.println(voiture.checkDistanceNextIntersection(positionActuel, 20));
+					if(voiture.checkDistanceNextIntersection(positionActuel, 20)) {
+						cmp ++;
+					}
+					System.out.println(cmp + " intersection detectes");*/
 				}
 			}
 		});
